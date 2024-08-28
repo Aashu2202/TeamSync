@@ -1,0 +1,66 @@
+.login-page {
+  background-image: linear-gradient(
+    45deg,
+    hsl(110deg 10% 11%) 0%,
+    hsl(137deg 16% 11%) 5%,
+    hsl(154deg 27% 9%) 12%,
+    hsl(167deg 44% 8%) 20%,
+    hsl(176deg 75% 7%) 29%,
+    hsl(183deg 100% 6%) 40%,
+    hsl(189deg 100% 6%) 51%,
+    hsl(196deg 100% 7%) 63%,
+    hsl(201deg 100% 7%) 74%,
+    hsl(207deg 100% 8%) 83%,
+    hsl(212deg 100% 8%) 90%,
+    hsl(218deg 100% 8%) 95%,
+    hsl(237deg 64% 10%) 98%,
+    hsl(267deg 80% 8%) 100%
+  );
+}
+
+.login-wrapper {
+  background: rgba(255, 255, 255, 0.33);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5.3px);
+  -webkit-backdrop-filter: blur(5.3px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+}
+
+.login-logo {
+  color: white;
+  font-size: 2rem;
+}
+
+.login-description {
+  color: white;
+  margin-top: 1rem;
+}
+
+.login-input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid white;
+  height: 2rem;
+  color: white;
+  caret-color: white;
+  outline: none;
+  padding-right: 2rem;
+}
+
+.login-button {
+  background-color: rgb(59, 59, 255);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  outline: none;
+  cursor: pointer;
+}
+
+.login-link {
+  color: white;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+}
