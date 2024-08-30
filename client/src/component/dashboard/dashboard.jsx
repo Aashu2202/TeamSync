@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Button, Nav } from 'react-bootstrap';
 import { FaUser, FaProjectDiagram, FaSignOutAlt, FaBars, FaTimes } from 'react-icons/fa';
+import { FaCodeMerge } from "react-icons/fa6";
 import './dashboard.css';
 import UserInfo from './UserInfo';
 import MyProjects from './MyProjects';
-
+import CreateRoomForm from './CreateRoomForm';
+import EnterRoomForm from './EnterRoomForm';
+import ContributedProjects from './ContributedProjects';
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [selectedSection, setSelectedSection] = useState(null);
+  const [showCreateRoomForm, setShowCreateRoomForm] = useState(false);
+  const [showEnterRoomForm, setShowEnterRoomForm] = useState(false);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -15,6 +20,10 @@ const Dashboard = () => {
 
   const handleSelect = (section) => {
     setSelectedSection(section);
+    if (section !== 'createRoom' && section !== 'enterRoom') {
+      setShowCreateRoomForm(false);
+      setShowEnterRoomForm(false);
+    }
   };
 
   const handleLogout = () => {
@@ -22,12 +31,40 @@ const Dashboard = () => {
     window.location.href = '/login';
   };
 
+  const handleCreateRoom = () => {
+    setShowCreateRoomForm(true);
+  };
+
+  const handleEnterRoom = () => {
+    setShowEnterRoomForm(true);
+  };
+
+  const handleCloseCreateRoomForm = () => {
+    setShowCreateRoomForm(false);
+  };
+
+  const handleCloseEnterRoomForm = () => {
+    setShowEnterRoomForm(false);
+  };
+
+  const handleRoomCreated = (codespaceLink) => {
+    window.location.href = codespaceLink; // Redirect to the generated Codespace link
+  };
+
   const renderContent = () => {
+    if (showCreateRoomForm) {
+      return <CreateRoomForm onRoomCreated={handleRoomCreated} onClose={handleCloseCreateRoomForm} />;
+    }
+    if (showEnterRoomForm) {
+      return <EnterRoomForm onClose={handleCloseEnterRoomForm} />;
+    }
     switch (selectedSection) {
       case 'userInfo':
         return <UserInfo />;
       case 'myProjects':
         return <MyProjects />;
+      case 'contributedProjects':
+        return <ContributedProjects />;
       default:
         return null;
     }
@@ -38,7 +75,7 @@ const Dashboard = () => {
       <Row noGutters>
         <Col md={3} className={`sidebar ${isSidebarOpen ? 'open' : 'collapsed'}`}>
           <div className="sidebar-header d-flex justify-content-between">
-          {isSidebarOpen && <h2 className="text-center">My App</h2>}
+            {isSidebarOpen && <h2 className="text-center">My App</h2>}
             <Button
               variant="link"
               className="sidebar-toggle"
@@ -46,7 +83,6 @@ const Dashboard = () => {
             >
               {isSidebarOpen ? <FaTimes /> : <FaBars />}
             </Button>
-           
           </div>
           <Nav className="flex-column">
             <Nav.Link onClick={() => handleSelect('userInfo')}>
@@ -56,6 +92,10 @@ const Dashboard = () => {
             <Nav.Link onClick={() => handleSelect('myProjects')}>
               <FaProjectDiagram />
               {isSidebarOpen && <span className="menu-item-text">My Projects</span>}
+            </Nav.Link>
+            <Nav.Link onClick={() => handleSelect('contributedProjects')}>
+            <FaCodeMerge />
+              {isSidebarOpen && <span className="menu-item-text">All Projects</span>}
             </Nav.Link>
           </Nav>
           <div className="sidebar-footer">
@@ -67,10 +107,10 @@ const Dashboard = () => {
         </Col>
         <Col md={9} className={`content ${isSidebarOpen ? 'expanded' : 'compressed'}`}>
           <div className="button-group mb-4">
-            <Button variant="primary" onClick={() => {/* handle create room */}}>
+            <Button variant="primary" onClick={handleCreateRoom}>
               Create Room
             </Button>
-            <Button variant="secondary" onClick={() => {/* handle enter room */}}>
+            <Button variant="secondary" onClick={handleEnterRoom}>
               Enter Room
             </Button>
           </div>

@@ -24,7 +24,10 @@ const Login = () => {
           password,
         },
         {
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json",
+
+           },
+          withCredentials: true,
         }
       );
   
@@ -44,7 +47,8 @@ const Login = () => {
         Cookies.set("email", email, { expires: 7, secure: true, sameSite: "Strict" });
         Cookies.set("profile", profile, { expires: 7, secure: true, sameSite: "Strict" });
         Cookies.set("contact", contact, { expires: 7, secure: true, sameSite: "Strict" });
-        Cookies.set("token", token, { expires: 7, secure: true, sameSite: "Strict" });
+        Cookies.set("token", token, { expires: 7, secure: 'production', sameSite: "Strict" });
+
         // The httpOnly cookie is already set by the server, so you don't need to set it here.
 
         // Navigate to the dashboard after successful login
