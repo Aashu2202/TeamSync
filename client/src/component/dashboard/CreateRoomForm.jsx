@@ -29,10 +29,18 @@ const CreateRoomForm = ({ onRoomCreated, onClose }) => {
       codespaceLink,
       roomId,
     };
-
+    const token = Cookies.get('tokens');
+    console.log(token);
+    
     try {
       // Send room data to the backend
-      const response = await axios.post("http://localhost:5000/api/rooms", roomData);
+      const response = await axios.post("http://localhost:5000/api/rooms", roomData,
+        {
+          headers: {
+            'cookies': token,  
+          }
+        }
+      );
       onRoomCreated(response.data); // Pass the created room data to the parent component
     } catch (error) {
       console.error("Error creating room:", error);

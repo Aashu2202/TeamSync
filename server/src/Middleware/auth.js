@@ -2,7 +2,8 @@ const { verifyToken } = require('../Utils/jwtUtils');
 
 const authenticateToken = async (req, res, next) => {
   console.log("Authenticating token...");
-  const token = req.cookies.token; // Ensure this matches the cookie name set on the client-side
+  
+  const token = req.headers['cookies']; // Ensure this matches the cookie name set on the client-side
   console.log('Token from Cookie:', token); // Log token from cookie
   
   if (!token) return res.sendStatus(401);

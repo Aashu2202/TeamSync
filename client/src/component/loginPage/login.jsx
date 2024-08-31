@@ -41,14 +41,18 @@ const Login = () => {
         const decodedToken = jwtDecode(token);
         
         const { name, email, profile, contact } = decodedToken;
-  
+        console.log(token);
+        
         // Set cookies with the information from the token
         Cookies.set("name", name, { expires: 7, secure: true, sameSite: "Strict" });
         Cookies.set("email", email, { expires: 7, secure: true, sameSite: "Strict" });
         Cookies.set("profile", profile, { expires: 7, secure: true, sameSite: "Strict" });
         Cookies.set("contact", contact, { expires: 7, secure: true, sameSite: "Strict" });
-        Cookies.set("token", token, { expires: 7, secure: 'production', sameSite: "Strict" });
+        Cookies.set("tokens", token, { expires: 7, secure: false, sameSite: "Strict" });
 
+        const temp = Cookies.get()
+        console.log(temp);
+        
         // The httpOnly cookie is already set by the server, so you don't need to set it here.
 
         // Navigate to the dashboard after successful login
