@@ -1,17 +1,31 @@
-// src/EnterRoomForm.js
-
 import React, { useState } from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
 import { FaTimes } from 'react-icons/fa';
+import axios from 'axios'; // Ensure axios is installed
 
 const EnterRoomForm = ({ onClose }) => {
-  const [codespaceLink, setCodespaceLink] = useState('');
   const [roomId, setRoomId] = useState('');
+  const [codespaceLink, setCodespaceLink] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (codespaceLink && roomId) {
-      window.location.href = '/terminal'; // Redirect to /terminal after submission
+    if (roomId) {
+      try {
+        // Fetch room details from backend
+        const response = await axios.get(`http://localhost:5000/api/rooms/${roomId}`);
+        const room = response.data;
+        
+        if (room.codespaceLink) {
+          // Redirect to the Codespace link
+          window.open(room.codespaceLink, "_blank");
+          // window.location.href = room.codespaceLink;
+        } else {
+          alert('No Codespace link found for this room.');
+        }
+      } catch (error) {
+        console.error("Error fetching room details:", error);
+        alert('Error fetching room details.');
+      }
     }
   };
 
@@ -22,17 +36,6 @@ const EnterRoomForm = ({ onClose }) => {
           <FaTimes />
         </Button>
         <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="formCodespaceLink">
-            <Form.Label>Codespace Link</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter codespace link"
-              value={codespaceLink}
-              onChange={(e) => setCodespaceLink(e.target.value)}
-              required
-            />
-          </Form.Group>
-
           <Form.Group controlId="formRoomId">
             <Form.Label>Room ID</Form.Label>
             <Form.Control

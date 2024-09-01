@@ -43,6 +43,16 @@ const userSchema = new mongoose.Schema({
         default: Date.now,
     },
 });
+userSchema.virtual('rooms', {
+    ref: 'UserRoomRole',
+    localField: '_id',
+    foreignField: 'user',
+    justOne: false,
+});
+
+// To ensure virtual fields are serialized
+userSchema.set('toObject', { virtuals: true });
+userSchema.set('toJSON', { virtuals: true });
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;

@@ -41,14 +41,18 @@ const CreateRoomForm = ({ onRoomCreated, onClose }) => {
           }
         }
       );
-      onRoomCreated(response.data); // Pass the created room data to the parent component
+      onRoomCreated(response.data); 
+      window.open(codespaceLink, "_blank");
+      // window.target = "_blank";
+      // window.location.href = codespaceLink;
+      
     } catch (error) {
       console.error("Error creating room:", error);
     }
   };
 
   const handleCodespaceLinkRedirect = () => {
-    const repo = "your-repo-name"; // Replace with the actual repo name if needed
+    const repo = "your-repo-name"; 
     window.open(`https://github.com/codespaces/new?repo=${repo}`, "_blank");
     setIsCodespaceLinkDisabled(false);
   };
