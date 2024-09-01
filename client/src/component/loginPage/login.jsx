@@ -53,7 +53,7 @@ const Login = () => {
         const temp = Cookies.get()
         console.log(temp);
         
-        // The httpOnly cookie is already set by the server, so you don't need to set it here.
+        
 
         // Navigate to the dashboard after successful login
         navigate("/dashboard");
