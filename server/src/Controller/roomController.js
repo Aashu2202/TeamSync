@@ -42,7 +42,7 @@ const createRoom = async (req, res) => {
 
 const enterInRoom = async (req, res) => {
   try {
-    const { roomId } = req.params;  
+    const { roomId } = req.params;
     const userId = req.user.user; // Get the user ID from the authenticated user
 
     // Find the Room by roomId
@@ -75,7 +75,7 @@ const enterInRoom = async (req, res) => {
 
     // Return the updated room details
     res.json(room);
-    
+
   } catch (error) {
     console.error('Error entering room:', error);
     res.status(500).json({ message: 'Server error' });
@@ -99,9 +99,72 @@ const getRoomsAndProjectsForAdmin = async (req, res) => {
   }
 };
 
-  
+
+const getRoomsByUserId = async (req, res) => {
+  const userId = req.user.user;
+  console.log(userId);
+
+  try {
+    // Find all rooms where the user is in the users list
+    const rooms = await Room.find({
+      users: userId  // Adjusted query to find rooms where userId is in the users array
+    })
+    .populate('users', 'username')  // Populate users with their username
+    .exec();  // Use exec() to ensure query execution
+
+    // Modify roomId based on project status
+    const modifiedRooms = rooms.map(room => {
+      return {
+        ...room.toObject(),  // Convert Mongoose document to plain object
+        roomId: room.status === 'Done' ? '--' : room.roomId  // Modify roomId if status is Done
+      };
+    });
+
+    console.log(modifiedRooms);
+    res.status(200).json(modifiedRooms);
+  } catch (error) {
+    console.error('Error fetching rooms for user:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+
+
+const updateRoomStatus = async (req, res) => {
+  const { roomId } = req.params;
+  const { status } = req.body;
+  console.log(req);
+
+  const userId = req.user.user; // Assuming the user's ID is stored in req.user.user
+
+
+  try {
+    // Check if the room exists
+    const room = await Room.findOne({ roomId });
+    if (!room) {
+      return res.status(404).json({ error: 'Room not found' });
+    }
+
+    // Check if the user is the admin of the room
+    if (room.admin.toString() !== userId) {
+      return res.status(403).json({ error: 'Only the admin can update the status.' });
+    }
+
+    // Update the room's status
+    room.status = status;
+    await room.save();
+
+    res.status(200).json({ message: 'Room status updated successfully.', room });
+  } catch (error) {
+    console.error('Error updating room status:', error);
+    res.status(500).json({ error: 'Server error while updating status.' });
+  }
+};
+
 module.exports = {
   createRoom,
   enterInRoom,
-  getRoomsAndProjectsForAdmin
+  getRoomsAndProjectsForAdmin,
+  updateRoomStatus,
+  getRoomsByUserId
 };

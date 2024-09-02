@@ -76,7 +76,7 @@ const Dashboard = () => {
       <Row noGutters>
         <Col md={3} className={`sidebar ${isSidebarOpen ? 'open' : 'collapsed'}`}>
           <div className="sidebar-header d-flex justify-content-between">
-            {isSidebarOpen && <h2 className="text-center">My App</h2>}
+            {isSidebarOpen && <h2 className="text-center">TeamSync</h2>}
             <Button
               variant="link"
               className="sidebar-toggle"

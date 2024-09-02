@@ -6,6 +6,10 @@ const roomSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
+    projectName: {
+        type: String,
+        required: true
+    },
     githubRepoLink: {
         type: String,
         required: true,
@@ -23,6 +27,11 @@ const roomSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     }],
+    status: {
+        type: String,
+        enum: ['Running', 'Done', 'Hold', 'Delay'],
+        default: 'Running'
+    },
     createdAtTimestamp: {
         type: Date,
         default: Date.now,

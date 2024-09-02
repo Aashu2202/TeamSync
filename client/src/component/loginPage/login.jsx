@@ -33,6 +33,8 @@ const Login = () => {
   
       if (response.status === 200) {
         const { data: token } = response.data;
+        console.log(response);
+        
         console.log("response data= " , response.data);
         
         console.log("token= ", token);
@@ -50,7 +52,7 @@ const Login = () => {
         Cookies.set("contact", contact, { expires: 7, secure: true, sameSite: "Strict" });
         Cookies.set("tokens", token, { expires: 7, secure: false, sameSite: "Strict" });
 
-        const temp = Cookies.get()
+        const temp = Cookies.get('token')
         console.log(temp);
         
         

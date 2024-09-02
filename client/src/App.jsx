@@ -4,8 +4,12 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './component/loginPage/login';
 import SignUp from './component/signupPage/signUp';
 import Dashboard from './component/dashboard/dashboard';
+import axios from 'axios';
+
 
 function App() {
+  axios.defaults.withCredentials = true;
+
   return (
     <Router>
       <Routes>

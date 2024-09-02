@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { FaCopy, FaCheck } from 'react-icons/fa';
@@ -15,9 +17,10 @@ const MyRooms = () => {
       try {
         const response = await axios.get('http://localhost:5000/api/rooms/projects', {
           headers: {
-            'cookies': token,  
+            'cookies': token,
           }
         });
+        console.log(response.data);
         setRooms(response.data);
       } catch (error) {
         console.error('Error fetching rooms', error);
@@ -43,6 +46,31 @@ const MyRooms = () => {
     </Tooltip>
   );
 
+  const handleStatusChange = async (roomId, newStatus) => {
+    console.log(`Updating roomId: ${roomId}, newStatus: ${newStatus}`);
+    try {
+      await axios.put(
+        `http://localhost:5000/api/rooms/${roomId}/status`,
+        { status: newStatus },
+        {
+          headers: {
+            'cookies': token,
+          }
+        }
+      );
+      // Update the room's status locally
+      setRooms(prevRooms => 
+        prevRooms.map(room =>
+          room._id === roomId ? { ...room, status: newStatus } : room
+        )
+      );
+      console.log('Updated rooms state:', rooms);
+    } catch (error) {
+      console.error('Error updating status', error);
+    }
+  };
+  
+
   return (
     <div>
       <h3>My Rooms</h3>
@@ -56,6 +84,7 @@ const MyRooms = () => {
             <th>Codespace Link</th>
             <th>Admin Username</th>
             <th>Assigned Users</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
@@ -100,6 +129,19 @@ const MyRooms = () => {
                 {room.users.map(user => (
                   <div key={user._id}>{user.username}</div>
                 ))}
+              </td>
+              <td>
+                <DropdownButton
+                  id={`dropdown-status-${room._id}`}
+                  title={room.status}
+                  variant="secondary"
+                  onSelect={(selectedKey) => handleStatusChange(room.roomId, selectedKey)}
+                >
+                  <Dropdown.Item eventKey="Running">Running</Dropdown.Item>
+                  <Dropdown.Item eventKey="Done">Done</Dropdown.Item>
+                  <Dropdown.Item eventKey="Hold">Hold</Dropdown.Item>
+                  <Dropdown.Item eventKey="Delay">Delay</Dropdown.Item>
+                </DropdownButton>
               </td>
             </tr>
           ))}
