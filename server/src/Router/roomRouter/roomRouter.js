@@ -5,7 +5,7 @@ const { authenticateToken } = require('../../Middleware/auth');
 
 
 roomRouter.post('/', authenticateToken, createRoom);
-roomRouter.get("/:roomId", enterInRoom);
 roomRouter.get("/projects",authenticateToken, getRoomsAndProjectsForAdmin);
+roomRouter.get("/:roomId",authenticateToken, enterInRoom);
 
 module.exports = roomRouter;

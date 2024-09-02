@@ -1,5 +1,3 @@
-// /models/roomModel.js
-
 const mongoose = require('mongoose');
 
 const roomSchema = new mongoose.Schema({
@@ -8,16 +6,8 @@ const roomSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
-    projectName: {
-        type: String,
-        required: true,
-    },
     githubRepoLink: {
         type: String,
-        required: true,
-    },
-    createdAt: {
-        type: Date,
         required: true,
     },
     codespaceLink: {
@@ -32,10 +22,6 @@ const roomSchema = new mongoose.Schema({
     users: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-    }],
-    projects: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Project',
     }],
     createdAtTimestamp: {
         type: Date,

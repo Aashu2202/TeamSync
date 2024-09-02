@@ -27,7 +27,7 @@ const Dashboard = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('tokens');
     window.location.href = '/login';
   };
 
@@ -48,7 +48,8 @@ const Dashboard = () => {
   };
 
   const handleRoomCreated = (codespaceLink) => {
-    window.location.href = codespaceLink; // Redirect to the generated Codespace link
+    // No need to open a new tab here since it's already handled in CreateRoomForm
+    setShowCreateRoomForm(false); // Close the form after creating the room
   };
 
   const renderContent = () => {

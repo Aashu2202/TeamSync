@@ -2,17 +2,24 @@ import React, { useState } from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
 import { FaTimes } from 'react-icons/fa';
 import axios from 'axios'; // Ensure axios is installed
-
+import Cookies from "js-cookie";
 const EnterRoomForm = ({ onClose }) => {
   const [roomId, setRoomId] = useState('');
   const [codespaceLink, setCodespaceLink] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+   const token =  Cookies.get('tokens');
     if (roomId) {
       try {
         // Fetch room details from backend
-        const response = await axios.get(`http://localhost:5000/api/rooms/${roomId}`);
+        const response = await axios.get(`http://localhost:5000/api/rooms/${roomId}`,
+          {
+            headers: {
+              'cookies': token,  
+            }
+          }
+        );
         const room = response.data;
         
         if (room.codespaceLink) {

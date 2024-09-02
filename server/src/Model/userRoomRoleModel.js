@@ -1,5 +1,3 @@
-// /models/userRoomRoleModel.js
-
 const mongoose = require('mongoose');
 
 const userRoomRoleSchema = new mongoose.Schema({

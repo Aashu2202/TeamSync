@@ -30,27 +30,25 @@ const CreateRoomForm = ({ onRoomCreated, onClose }) => {
       roomId,
     };
     const token = Cookies.get('tokens');
-    console.log(token);
     
     try {
       // Send room data to the backend
-      const response = await axios.post("http://localhost:5000/api/rooms", roomData,
-        {
-          headers: {
-            'cookies': token,  
-          }
+      const response = await axios.post("http://localhost:5000/api/rooms/", roomData, {
+        headers: {
+          'cookies': token,  
         }
-      );
-      onRoomCreated(response.data); 
-      window.open(codespaceLink, "_blank");
-      // window.target = "_blank";
-      // window.location.href = codespaceLink;
+      });
       
+      // Pass only the codespaceLink to onRoomCreated
+      onRoomCreated(codespaceLink);
+      
+      // Open the codespace link in a new tab
+      window.open(codespaceLink, "_blank");
     } catch (error) {
       console.error("Error creating room:", error);
     }
   };
-
+  
   const handleCodespaceLinkRedirect = () => {
     const repo = "your-repo-name"; 
     window.open(`https://github.com/codespaces/new?repo=${repo}`, "_blank");
