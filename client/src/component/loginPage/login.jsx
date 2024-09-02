@@ -41,7 +41,7 @@ const Login = () => {
   
         // Decode the token to retrieve information
         const decodedToken = jwtDecode(token);
-        
+        Cookies.remove({data: token});
         const { name, email, profile, contact } = decodedToken;
         console.log(token);
         
