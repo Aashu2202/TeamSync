@@ -43,7 +43,7 @@ const createRoom = async (req, res) => {
 const enterInRoom = async (req, res) => {
   try {
     const { roomId } = req.params;  
-    const userId = req.user.user; // Get the user ID from the authenticated user
+    const userId = req.user.user; 
 
     // Find the Room by roomId
     let room = await Room.findOne({ roomId });
@@ -89,8 +89,8 @@ const getRoomsAndProjectsForAdmin = async (req, res) => {
   try {
     // Find all rooms where the current user is the admin
     const rooms = await Room.find({ admin: userId })
-      .populate('admin', 'username')  // Populate admin field with username
-      .populate('users', 'username'); // Populate users field with username
+      // .populate('admin', 'username')  
+      // .populate('users', 'username'); 
 
     res.status(200).json(rooms);
   } catch (error) {

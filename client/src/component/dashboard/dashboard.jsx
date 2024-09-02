@@ -8,6 +8,7 @@ import MyProjects from './MyProjects';
 import CreateRoomForm from './CreateRoomForm';
 import EnterRoomForm from './EnterRoomForm';
 import ContributedProjects from './ContributedProjects';
+import Cookies from 'js-cookie';
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [selectedSection, setSelectedSection] = useState(null);
@@ -27,7 +28,13 @@ const Dashboard = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('tokens');
+    Cookies.remove('tokens');
+    Cookies.remove('contact');
+    Cookies.remove('email');
+    Cookies.remove('name');
+    Cookies.remove('profile');
+    Cookies.remove('tokens');
+    Cookies.remove('token');
     window.location.href = '/login';
   };
 
