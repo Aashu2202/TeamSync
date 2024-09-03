@@ -8,6 +8,7 @@ import MyProjects from './MyProjects';
 import CreateRoomForm from './CreateRoomForm';
 import EnterRoomForm from './EnterRoomForm';
 import ContributedProjects from './ContributedProjects';
+import TaskAssigned from './TaskAssigned';
 import Cookies from 'js-cookie';
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -73,8 +74,10 @@ const Dashboard = () => {
         return <MyProjects />;
       case 'contributedProjects':
         return <ContributedProjects />;
+      case 'TaskAssigned':
+        return <TaskAssigned />;
       default:
-        return null;
+        return <UserInfo />;;
     }
   };
 
@@ -104,6 +107,10 @@ const Dashboard = () => {
             <Nav.Link onClick={() => handleSelect('contributedProjects')}>
             <FaCodeMerge />
               {isSidebarOpen && <span className="menu-item-text">All Projects</span>}
+            </Nav.Link>
+            <Nav.Link onClick={() => handleSelect('TaskAssigned')}>
+            <FaCodeMerge />
+              {isSidebarOpen && <span className="menu-item-text">Task Assigned</span>}
             </Nav.Link>
           </Nav>
           <div className="sidebar-footer">

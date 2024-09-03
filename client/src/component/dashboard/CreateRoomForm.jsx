@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Button, Container } from "react-bootstrap";
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { generateRoomId } from "../../utils/utils";
 import { FaTimes } from "react-icons/fa";
 import axios from "axios"; // Assuming you're using axios for HTTP requests
@@ -98,33 +98,44 @@ const CreateRoomForm = ({ onRoomCreated, onClose }) => {
 
           <Form.Group controlId="formCodespaceLink">
             <Form.Label>Codespace Link</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter codespace link"
-              value={codespaceLink}
-              onChange={(e) => setCodespaceLink(e.target.value)}
-              required
-              disabled={isCodespaceLinkDisabled}
-            />
-            <Button
-              variant="primary"
-              onClick={handleCodespaceLinkRedirect}
-              className="mt-2"
-            >
-              Get Codespace Link
-            </Button>
+            <Row>
+              <Col>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter codespace link"
+                  value={codespaceLink}
+                  onChange={(e) => setCodespaceLink(e.target.value)}
+                  required
+                  disabled={isCodespaceLinkDisabled}
+                />
+              </Col>
+              <Col xs="auto" >
+                <Button
+                  variant="primary"
+                  onClick={handleCodespaceLinkRedirect}
+                >
+                  Get Codespace Link
+                </Button>
+              </Col>
+            </Row>
           </Form.Group>
 
           <Form.Group controlId="formRoomId">
             <Form.Label>Room ID</Form.Label>
-            <Form.Control type="text" value={roomId} readOnly />
-            <Button
-              variant="primary"
-              onClick={handleGenerateRoomId}
-              className="mt-2"
-            >
-              Generate Room ID
-            </Button>
+            <Row>
+              <Col>
+                <Form.Control type="text" value={roomId} readOnly />
+              </Col>
+              <Col xs="auto" >
+                <Button
+                  variant="primary"
+                  onClick={handleGenerateRoomId}
+                  style = {{width: '165px'}}
+                >
+                  Generate Room ID
+                </Button>
+              </Col>
+            </Row>
           </Form.Group>
 
           <Button

@@ -89,8 +89,8 @@ const getRoomsAndProjectsForAdmin = async (req, res) => {
   try {
     // Find all rooms where the current user is the admin
     const rooms = await Room.find({ admin: userId })
-      // .populate('admin', 'username')  
-      // .populate('users', 'username'); 
+      .populate('admin', 'username')  
+      .populate('users', 'username'); 
 
     res.status(200).json(rooms);
   } catch (error) {
@@ -128,12 +128,29 @@ const getRoomsByUserId = async (req, res) => {
   }
 };
 
+const getUsersByRoomId = async (req, res) => {
+  const { roomId } = req.params;
+
+  try {
+    // Find the room by roomId and populate the users
+    const room = await Room.findById(roomId).populate('users', 'username _id'); // Adjust fields as needed
+
+    if (!room) {
+      return res.status(404).json({ message: 'Room not found' });
+    }
+
+    // Return the users in the room
+    res.status(200).json({ users: room.users });
+  } catch (error) {
+    console.error('Error fetching users for room:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
 
 
 const updateRoomStatus = async (req, res) => {
   const { roomId } = req.params;
   const { status } = req.body;
-  console.log(req);
 
   const userId = req.user.user; // Assuming the user's ID is stored in req.user.user
 
@@ -166,5 +183,6 @@ module.exports = {
   enterInRoom,
   getRoomsAndProjectsForAdmin,
   updateRoomStatus,
+  getUsersByRoomId,
   getRoomsByUserId
 };

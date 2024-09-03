@@ -1,10 +1,11 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import Login from './component/loginPage/login';
 import SignUp from './component/signupPage/signUp';
 import Dashboard from './component/dashboard/dashboard';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 
 function App() {

@@ -51,7 +51,7 @@ const ContributedProjects = () => {
 
   return (
     <div>
-      <h3>My Projects</h3>
+      <h3>All Projects</h3>
       <Table striped bordered hover variant="dark">
         <thead>
           <tr>

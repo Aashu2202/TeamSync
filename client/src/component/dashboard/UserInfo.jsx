@@ -27,7 +27,7 @@ const UserInfo = () => {
           <Row>
             <Col className="text-center mb-4">
               <h2 className="user-info-logo">User Info</h2>
-              <p className="user-info-description">Update your profile details</p>
+              {/* <p className="user-info-description">Update your profile details</p> */}
             </Col>
           </Row>
           <Row className="justify-content-center">

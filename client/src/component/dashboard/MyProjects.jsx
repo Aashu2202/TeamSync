@@ -10,6 +10,7 @@ import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 const MyRooms = () => {
   const [rooms, setRooms] = useState([]);
   const [copiedRoomId, setCopiedRoomId] = useState(null);
+  const [statusChange, setStatusChange] = useState(false);
   const token = Cookies.get('tokens');
 
   useEffect(() => {
@@ -28,7 +29,7 @@ const MyRooms = () => {
     };
 
     fetchRooms();
-  }, [token]);
+  }, [token, statusChange]);
 
   const handleCopy = async (roomId) => {
     try {
@@ -64,6 +65,12 @@ const MyRooms = () => {
           room._id === roomId ? { ...room, status: newStatus } : room
         )
       );
+
+      if(statusChange){
+        setStatusChange(false)
+      }else{
+        setStatusChange(true)
+      }
       console.log('Updated rooms state:', rooms);
     } catch (error) {
       console.error('Error updating status', error);
@@ -73,7 +80,7 @@ const MyRooms = () => {
 
   return (
     <div>
-      <h3>My Rooms</h3>
+      <h3>My Projects</h3>
       <Table striped bordered hover variant="dark">
         <thead>
           <tr>
