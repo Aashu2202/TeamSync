@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
 import PhoneInput from "react-phone-input-2";
+import Cookies from "js-cookie";
 import "react-phone-input-2/lib/style.css"; // Import the styles
 import "./signUp.css";
 
@@ -15,6 +16,12 @@ const SignUp = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const token = Cookies.get('tokens'); // Replace 'token' with your actual token cookie name
+    if (token) {
+      navigate('/dashboard');
+    }
+  }, [navigate]);
   const handleSignUp = async (e) => {
     e.preventDefault();
     setError("");
@@ -24,12 +31,6 @@ const SignUp = () => {
       return;
     }
 
-    useEffect(() => {
-      const token = Cookies.get('tokens'); // Replace 'token' with your actual token cookie name
-      if (token) {
-        navigate('/dashboard');
-      }
-    }, [navigate]);
 
     try {
       const response = await axios.post("http://localhost:5000/api/users/register", {

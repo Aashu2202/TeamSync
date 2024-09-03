@@ -11,11 +11,6 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true,  // Consider making this unique
     },
-    admin: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
-    },
     email: {
         type: String,
         required: true,
